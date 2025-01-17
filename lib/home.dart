@@ -1,35 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/navbar/home_page.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+import 'package:shopping_app/navbar/profile.dart';
+import 'package:shopping_app/navbar/setting.dart';
+
+class NavPage extends StatefulWidget {
+  const NavPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<NavPage> createState() => _NavPage();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final List<String> images = [
-    'assets/imgcard1.jpeg',
-    'assets/imgcard2.jpeg',
-    'assets/imgcard3.jpeg',
-    'assets/imgcard4.jpeg',
-    'assets/imgcard5.jpeg',
-    'assets/imgcard6.jpeg',
-    'assets/imgcard7.jpeg',
-    'assets/imgcard8.jpeg',
-  ]; // list of card images
-  final List<String> imagesH = [
-    'assets/imghot1.jpeg',
-    'assets/imghot2.jpeg',
-    'assets/imghot3.jpeg',
-    'assets/imghot4.jpeg',
-    'assets/imghot5.jpeg',
-  ]; // list of hot offers images
+class _NavPage extends State<NavPage> {
+  int selectedIndex = 0;
+  List<Widget> pages = [MyHomePage(), Profile(), Setting()];
+
+  // list of hot offers images
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.deepPurple,
         title: Center(
             child: Text(
@@ -41,125 +33,94 @@ class _MyHomePageState extends State<MyHomePage> {
               fontFamily: 'Lora'), //google font Lora
         )),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      drawer: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        color: Colors.white,
         child: ListView(
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Our Products',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lora'),
-            ),
-            SizedBox(height: 10),
-            Container(
-              height: 300,
-              child: PageView(
-                children: [
-                  Image.asset(
-                    'assets/img1.jpeg',
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                  ),
-                  Image.asset(
-                    'assets/img2.jpeg',
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                  ),
-                  Image.asset(
-                    'assets/img3.jpeg',
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+            // SizedBox(
+            //   height: 100,
+            // ),
+            ListTile(
+              //leading: Icon(Icons.circle, color: Colors.white),
+              title: Text(
+                "Profile",
+                style: TextStyle(
+                  fontFamily: "Lora",
+                  fontSize: 18,
                 ),
-                itemCount: 8,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          images[index], //list of card images
-                          width: 120,
-                          height: 120,
-                        ),
-                        Row(children: [
-                          Text('Product ${index + 1}'), // product + his number
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 55,
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.add_shopping_cart,
-                                color: Colors.blue,
-                              ),
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Item added to the cart'),
-                                    backgroundColor: Colors.green,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ]),
-                      ],
-                    ),
-                  );
-                },
+              ),
+              subtitle: Text("Edit profile", style: TextStyle()),
+              trailing: Icon(
+                Icons.account_circle,
               ),
             ),
-            Text(
-              'Hot Offers',
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lora'),
+            ListTile(
+              //leading: Icon(Icons.circle, color: Colors.white),
+              title: Text(
+                "About Us",
+                style: TextStyle(
+                  fontFamily: "Lora",
+                  fontSize: 18,
+                ),
+              ),
+              subtitle: Text("what are we", style: TextStyle()),
+              trailing: Icon(
+                Icons.group,
+              ),
             ),
-            SizedBox(height: 10),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Image.asset(
-                            imagesH[index], //list of hot offers images
-                            width: 120,
-                            height: 120,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Center(
-                              child: Text(
-                                  'Hot Offer ${index + 1}')), //product + his number
-                        ),
-                      ],
-                    ),
-                  );
-                },
+            ListTile(
+              //leading: Icon(Icons.circle, color: Colors.white),
+              title: Text(
+                "Contact Us",
+                style: TextStyle(
+                  fontFamily: "Lora",
+                  fontSize: 18,
+                ),
+              ),
+              subtitle: Text("Text us", style: TextStyle()),
+              trailing: Icon(
+                Icons.contact_support,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                // Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+              },
+              //leading: Icon(Icons.circle, color: Colors.white),
+              title: Text(
+                "LogOut",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontFamily: "Lora",
+                  fontSize: 18,
+                ),
+              ),
+
+              trailing: Icon(
+                Icons.logout,
+                color: Colors.red,
               ),
             ),
           ],
         ),
       ),
+      body: pages[selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
+          items: [
+            BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
+            BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),
+            BottomNavigationBarItem(
+                label: "Setting", icon: Icon(Icons.settings)),
+          ]),
     );
+  }
+
+  onItemTapped(int index) {
+    selectedIndex = index;
+    setState(() {});
   }
 }
